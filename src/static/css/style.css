@@ -32,6 +32,17 @@ textarea{
 }
 
 #cookie-edit{
-	width: 500px;
+	width: 90%;
 	margin: 5px;
+}
+
+.list{
+	list-style-type: none;
+	/* [disabled]max-width: 60%; */
+}
+
+.list-item{
+	margin: 15px;
+	border-bottom: solid 1px #ccc;
+	padding: 10px;
 }

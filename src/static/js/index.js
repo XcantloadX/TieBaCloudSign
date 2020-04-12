@@ -9,15 +9,6 @@ var signer = [
 	},
 	
 	{
-		name: "百度知道",
-		logo: "static/image/bdzhidao.png",
-		state: "暂未实现自动签到",
-		icon: "warn",
-		link: "",
-		class: "stat-warn"
-	},
-	
-	{
 		name: "Bilibili",
 		logo: "static/image/bilibili.png",
 		state: "正在开发",
