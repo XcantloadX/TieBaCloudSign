@@ -1,19 +1,24 @@
 <?php
-define("LOG_FILE", "log.txt");
-include_once "../lib/http.php";
-include_once "../lib/log.php";
-include_once "../lib/timewatch.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/api/lib/http.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/api/lib/log.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/api/lib/timewatch.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/api/lib/cookiemanager.php";
 
 set_time_limit(0); //设置脚本执行时间无上限
 date_default_timezone_set("Asia/Shanghai"); //设置时区
 
+logSetName("TieBa");
+
+//TODO: 增加多个账号的检测
 //读取、检查 Cookie
-$cookie = file_get_contents("../COOKIES");
-if($cookie == "")
+$account = cookieGet("tieba", 0);
+if($account == "" || $account->cookie == "")
 {
-	LOG_FILE("Cookie 未设置！无法签到！");
+	logError("Cookie 未设置！无法签到！");
 	exit;
 }
+else
+	$cookie = $account->cookie;
 
 signAll();
 
