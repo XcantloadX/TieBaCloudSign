@@ -8,9 +8,9 @@ header("Content-Type: text/html; charset=utf-8"); //设置 UTF-8
 $files = scandir(SIGN_SCRIPT_PATH);
 
 //遍历执行
-foreach($files as $script)
+foreach($files as $file)
 {
-	if($script != "." && $script != "..")
-		include(SIGN_SCRIPT_PATH."/".$script); //执行
+	if($file != "." && $file != ".." && $file != "readme.txt")
+		include(SIGN_SCRIPT_PATH."/".$file); //执行
 }
 
