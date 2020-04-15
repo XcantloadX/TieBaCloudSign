@@ -1,8 +1,6 @@
 <?php
 define("COOKIE_PATH", $_SERVER['DOCUMENT_ROOT']."/api/stats/cookies.json");
 
-cookieGet("tieba", 0);
-
 //检查文件是否存在
 function checkFileExists()
 {
