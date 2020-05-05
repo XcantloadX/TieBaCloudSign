@@ -7,6 +7,7 @@ include_once $_SERVER['DOCUMENT_ROOT']."/api/lib/cookiemanager.php";
 logSetName("Bilibili");
 $cookie = "";
 
+logInfo("开始签到哔哩哔哩");
 $accounts = cookieGetAll("bilibili"); //获取所有要签到的账号
 //遍历，签到
 foreach($accounts as $ac)
@@ -14,8 +15,6 @@ foreach($accounts as $ac)
 	$cookie = $ac->cookie;
 	signin($cookie);
 }
-
-
 
 //TODO: 解决此签到只会增加硬币，不会完成每日登录经验
 //TODO: 加入每日自动随机观看一个视频
@@ -34,6 +33,7 @@ function signin($cookie)
 	{
 		logError("出现错误！code=".$json->code);
 		logError("返回 json: ".$ret);
+		
 		return;
 	}
 	

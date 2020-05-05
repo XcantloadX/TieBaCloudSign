@@ -8,6 +8,7 @@ set_time_limit(0); //设置脚本执行时间无上限
 date_default_timezone_set("Asia/Shanghai"); //设置时区
 
 logSetName("TieBa");
+logInfo("开始签到百度贴吧");
 
 //TODO: 增加多个账号的检测
 //读取、检查 Cookie
