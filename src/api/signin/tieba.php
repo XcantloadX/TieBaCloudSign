@@ -52,15 +52,17 @@ function sign($name)
 function signAll()
 {
 	global $cookie;
+	logInfo("开始签到账号 @".getUserName());
 	
-	$names = getAllBars();
+	$bars = getAllBars();
 	$signed = 0; //签到成功个数
 	watchStart();
 	
 	//循环签到所有贴吧
-	for($i = 0; $i < count($names); $i++)
+	foreach($bars as $name=>$level)
 	{
-		$json = sign($names[$i]);
+		
+		$json = sign($name);
 		$json = json_decode($json);
 		
 		//错误码
@@ -68,7 +70,7 @@ function signAll()
 		
 		if($code == 1101)
 		{
-			logWarn("你已经签到过 ".$names[$i]."吧 了！");
+			logWarn("你已经签到过 ".$name."吧 了！当前为 ".$level." 级");
 		}
 		else if($code == 1990055)
 		{
@@ -78,22 +80,22 @@ function signAll()
 		}
 		else if($code != 0)
 		{
-			logError("签到 ".$names[$i]."吧 时发生错误！");
+			logError("签到 ".$name."吧 时发生错误！");
 			logError("返回 json：".json_encode($json));
 		}
 		else
 		{
-			logInfo("签到 ".$names[$i]."吧 成功。");
+			logInfo("签到 ".$name."吧 成功。当前为 ".$level." 级");
 			$signed++;
 		}
 	}
 	
 	watchEnd();
-	logInfo("已成功签到：".$signed."/".count($names)." 个贴吧。");
+	logInfo("已成功签到：".$signed."/".count($bars)." 个贴吧。");
 	logInfo("耗时 ".watchGetSec()." 秒。");
 }
 
-//获取所有关注的贴吧的名称
+//获取所有关注的贴吧的名称和等级
 function getAllBars()
 {
 	global $cookie;
@@ -113,15 +115,34 @@ function getAllBars()
 
 	//解析 json
 	$json = json_decode($json);
-	$names = array();
+	$bars = array();
 	
-	//遍历出所有名称
+	//遍历出所有名称和等级
 	for($i = 0; $i < count($json->forums); $i++)
 	{
-		array_push($names, $json->forums[$i]->forum_name);
+		$bars[$json->forums[$i]->forum_name] = $json->forums[$i]->level_id;
+		//array_push($names, $json->forums[$i]->forum_name);
 	}
 	
-	return $names;
+	return $bars;
+}
+
+//获取用户名称
+function getUserName()
+{
+	global $cookie;
+	
+	$html = hGet(array(
+		"url" => "https://tieba.baidu.com",
+		"cookie" => $cookie
+	));
+	
+	//截取用户名
+	$start = strpos($html, '"user_name"') + strlen('"user_name"') + 3;
+	$end = strpos($html, '"', $start);
+	$name = substr($html, $start, $end - $start);
+	
+	return $name;
 }
 
 ?>
