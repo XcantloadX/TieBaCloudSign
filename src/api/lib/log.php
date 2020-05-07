@@ -55,12 +55,13 @@ function output($type, $sender, $str, $color)
 	//拼接消息
 	$msg = "[".date("Y-m-d h:i:s",time())."][".$sender."][".$type."] ".$str;
 	
+	//输出到文件
+	fputs($fp, $msg.PHP_EOL);
+	
 	//上色
 	if($html && $color)
 		$msg = '<span style="color: '.$color.'">'.$msg.'</span>';
 	
-	//输出到文件
-	fputs($fp, $msg.PHP_EOL);
 	//输出到网页
 	echo $msg.PHP_EOL."<br/>";
 	
