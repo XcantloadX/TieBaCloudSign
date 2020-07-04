@@ -1,5 +1,5 @@
 <?php
-define("COOKIE_PATH", $_SERVER['DOCUMENT_ROOT']."/api/stats/cookies.json");
+define("COOKIE_PATH", __ROOT__."/api/stats/cookies.json");
 
 //检查文件是否存在
 function checkFileExists()

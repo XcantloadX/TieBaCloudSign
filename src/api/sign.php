@@ -1,5 +1,6 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/api/lib/log.php";
+include_once "global.php";
+include_once __ROOT__."/api/lib/log.php";
 define("SIGN_SCRIPT_PATH", "signin/");
 
 set_time_limit(0); //设置脚本执行时间无上限

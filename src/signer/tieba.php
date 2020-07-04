@@ -1,8 +1,9 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/api/lib/http.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/api/lib/log.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/api/lib/timewatch.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/api/lib/cookiemanager.php";
+include_once "../global.php";
+include_once __LIB__."/http.php";
+include_once __LIB__."/log.php";
+include_once __LIB__."/timewatch.php";
+include_once __LIB__."/cookiemanager.php";
 
 set_time_limit(0); //设置脚本执行时间无上限
 date_default_timezone_set("Asia/Shanghai"); //设置时区

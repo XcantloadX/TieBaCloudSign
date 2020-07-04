@@ -2,7 +2,7 @@
 
 <?php
 define("MAX_LOG_SIZE", 2 * 1024 * 1024);
-define("LOG_PATH", $_SERVER['DOCUMENT_ROOT']."/api/stats/signinStats.log");
+define("LOG_PATH", __ROOT__."/api/stats/signinStats.log");
 date_default_timezone_set("Asia/Shanghai"); //设置时区
 
 $name = "default"; //输出提示名字
