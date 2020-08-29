@@ -1,65 +1,61 @@
 <?php
-define("COOKIE_PATH", __ROOT__."/api/stats/cookies.json");
+require_once "../global.php";
+define("COOKIE_PATH", __USER__."/cookies.json");
 
-//检查文件是否存在
-function checkFileExists()
+class CookieManager
 {
-	if(!file_exists(COOKIE_PATH))
-	{
-		$fp = fopen(COOKIE_PATH, "w");	
-		fclose($fp);
-	}
-}
-
-function read()
-{
-	checkFileExists();
-	$obj = json_decode(file_get_contents(COOKIE_PATH));
-	return is_object($obj) ? $obj : array();
-}
-
-function write($obj)
-{
-	checkFileExists();
-	file_put_contents(COOKIE_PATH, json_encode($obj, JSON_UNESCAPED_UNICODE));
-}
-
-
-//获取指定网站的所有账号的 Cookie
-function cookieGetAll($sitename)
-{
-	$obj = read();
-	return isset($obj->$sitename) ? $obj->$sitename : "";
-}
-
-function cookieGet($sitename, $index)
-{
-	$obj = cookieGetAll($sitename);
-	if(!is_array($obj))
-		return "";
-	else if(count($obj) <= 0)
-		return "";
-	else
-		return $obj[$index];
-}
-
-//添加指定网站的账号
-function cookieAdd($sitename, $name, $cookie)
-{
-	$obj = read();
-	$index = array_push($obj->$sitename, array(
-		"name" => $name,
-		"cookie" => $cookie
-		));
+	var $siteName = "";
+	var $jsonObj;
+	var $siteObj;
 	
-	write($obj);
-}
-
-//TODO: 完成删除功能
-function cookieDelete($sitename, $index)
-{
-	$obj = read();
-	//unset($obj->$sitename[$index]);
-	//unset($obj->tieba[0]);
-	write($obj);
+	function __construct($siteName)
+	{
+		if(!file_exists(COOKIE_PATH))
+		{
+			$fp = fopen(COOKIE_PATH, "w");	
+			fwrite($fp, '{"'.$siteName.'": []}');
+			fclose($fp);
+		}
+		$this->siteName = $siteName;
+		$this->jsonObj = json_decode(file_get_contents(COOKIE_PATH));
+		$this->siteObj = $this->jsonObj->$siteName;
+	}
+	
+	//列出所有账号
+	function getAll()
+	{
+		return isset($this->siteObj) ? $this->siteObj : array();
+	}
+	
+	/*
+	* @param int $index 下标
+	*/
+	function get($index)
+	{
+		$array = $this->getAll();
+		return $array[$index];
+	}
+	
+	function add($accountName, $cookie)
+	{
+		$index = array_push($this->siteObj, array(
+			"name" => $accountName,
+			"cookie" => $cookie
+		));
+		$this->save();
+		return $index;
+	}
+	
+	function remove($index)
+	{
+		unset($this->siteObj[$index]);
+		$this->save();
+	}
+	
+	private function save()
+	{
+		$siteName = $this->siteName;
+		$this->jsonObj->$siteName = $this->siteObj;
+		file_put_contents(COOKIE_PATH, json_encode($this->jsonObj, JSON_UNESCAPED_UNICODE));
+	}
 }

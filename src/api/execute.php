@@ -1,7 +1,7 @@
 <?php
-include_once "global.php";
-include_once __ROOT__."/api/lib/log.php";
-define("SIGN_SCRIPT_PATH", "signin/");
+include_once "../global.php";
+include_once __LIB__."/log.php";
+define("SIGN_SCRIPT_PATH", __ROOT__."/signer/");
 
 set_time_limit(0); //设置脚本执行时间无上限
 date_default_timezone_set("Asia/Shanghai"); //设置时区
@@ -22,7 +22,6 @@ $files = scandir(SIGN_SCRIPT_PATH);
 //遍历执行
 foreach($files as $file)
 {
-	if($file != "." && $file != ".." && $file != "readme.txt")
-		include(SIGN_SCRIPT_PATH."/".$file); //执行
+	if($file != "." && $file != ".." && strpos($file, ".php") > 0)
+		include(SIGN_SCRIPT_PATH."/".$file);
 }
-

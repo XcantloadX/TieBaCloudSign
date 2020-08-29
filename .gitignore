@@ -1,4 +1,4 @@
 src/api/test.php
 src/api/stats/cookies.json
 src/api/stats/signinStats.log
-src/api/stats/cookies.json
+src/user/cookies.json

@@ -11,7 +11,9 @@ $cookie = "";
 logInfo("开始签到哔哩哔哩");
 watchStart();
 
-$accounts = cookieGetAll("bilibili"); //获取所有要签到的账号
+//获取所有要签到的账号
+$accounts = new CookieManager("bilibili"); 
+$accounts = $accounts->getAll();
 //遍历，签到
 foreach($accounts as $ac)
 {
@@ -23,7 +25,6 @@ watchEnd();
 logInfo("耗时 ".watchGetSec()." 秒。");
 
 //TODO: 解决此签到只会增加硬币，不会完成每日登录经验
-//TODO: 加入每日自动随机观看一个视频
 //签到
 function signin($cookie)
 {

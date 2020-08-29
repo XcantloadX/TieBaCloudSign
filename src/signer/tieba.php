@@ -5,28 +5,22 @@ include_once __LIB__."/log.php";
 include_once __LIB__."/timewatch.php";
 include_once __LIB__."/cookiemanager.php";
 
-set_time_limit(0); //设置脚本执行时间无上限
-date_default_timezone_set("Asia/Shanghai"); //设置时区
-
 logSetName("TieBa");
 logInfo("开始签到百度贴吧");
 
-//TODO: 增加多个账号的检测
-//读取、检查 Cookie
-$account = cookieGet("tieba", 0);
-if($account == "" || $account->cookie == "")
-{
-	logError("Cookie 未设置！无法签到！");
-	exit;
-}
-else
-	$cookie = $account->cookie;
+$accounts = new CookieManager("tieba"); 
+$accounts = $accounts->getAll();
+$cookie = "";
 
-signAll();
+foreach($accounts as $ac)
+{
+	$cookie = $ac->cookie;
+	signAll();
+}
 
 
 /* 签到单个贴吧
-@param 该贴吧名称
+@param string $name 该贴吧名称
 */
 function sign($name)
 {
@@ -72,6 +66,7 @@ function signAll()
 		if($code == 1101)
 		{
 			logWarn("你已经签到过 ".$name."吧 了！当前为 ".$level." 级");
+			$signed++;
 		}
 		else if($code == 1990055)
 		{
