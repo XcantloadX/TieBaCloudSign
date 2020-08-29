@@ -10,7 +10,7 @@ class CookieManager
 	
 	function __construct($siteName)
 	{
-		if(!file_exists(COOKIE_PATH))
+		if(!file_exists(COOKIE_PATH)) //检查 cookies.json 是否存在
 		{
 			$fp = fopen(COOKIE_PATH, "w");	
 			fwrite($fp, '{"'.$siteName.'": []}');
@@ -36,6 +36,7 @@ class CookieManager
 		return $array[$index];
 	}
 	
+	//新增一个账号
 	function add($accountName, $cookie)
 	{
 		$index = array_push($this->siteObj, array(
@@ -46,12 +47,14 @@ class CookieManager
 		return $index;
 	}
 	
+	//按下标移除一个账号
 	function remove($index)
 	{
 		unset($this->siteObj[$index]);
 		$this->save();
 	}
 	
+	//保存到文件
 	private function save()
 	{
 		$siteName = $this->siteName;

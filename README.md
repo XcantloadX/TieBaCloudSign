@@ -1,14 +1,10 @@
-# 百度贴吧云签到
-
-使用 PHP 编写的百度贴吧签到工具  
+# 云签到 AutoSign
+使用 PHP 编写的自动签到工具  
 **只适合个人使用**  
+**开发中**   
 
 ## 使用
-
-把这个脚本放在任意一个 PHP 空间/VPS 上  
-使用 IFTTT（如果是虚拟主机且不支持定时的话）或者任意其他的方法**定时执行**这个脚本  
-
-访问首页，填写 Cooike 保存  
+使用 IFTTT 或者任意其他的方法定时执行`/api/execute.php`  
 
 ## 截图
 ![签到日志](https://github.com/XcantloadX/TieBaCloudSign/blob/master/log.png?raw=true)

@@ -2,3 +2,4 @@ src/api/test.php
 src/api/stats/cookies.json
 src/api/stats/signinStats.log
 src/user/cookies.json
+src/user/signinStats.log
